@@ -1,18 +1,13 @@
 package com.hjw.mediaplayerdemo;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.Arrays;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.txt_media_name)
     TextView mMediaNameView;
 
-    @BindView(R.id.txt_all_info)
-    TextView txt_all_info;
     Listener listener = new Listener();
     Uri uri;
 
@@ -38,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mSelectBtn.setOnClickListener(listener);
+        mMediaNameView.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
     class Listener implements View.OnClickListener {
@@ -60,23 +54,30 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == 1 && data != null) {
             uri = data.getData();
             StringBuilder sb = new StringBuilder();
-            sb.append("getAuthority = " + uri.getAuthority());
-            sb.append("getEncodedAuthority = " + uri.getEncodedAuthority());
-            sb.append("getEncodedFragment = " + uri.getEncodedFragment());
-            sb.append("getEncodedPath = " + uri.getEncodedPath());
-            sb.append("getEncodedQuery = " + uri.getEncodedQuery());
-            sb.append("getEncodedSchemeSpecificPart = " + uri.getEncodedSchemeSpecificPart());
-            sb.append("getEncodedUserInfo = " + uri.getEncodedUserInfo());
-            sb.append("getFragment = " + uri.getFragment());
-            sb.append("getHost = " + uri.getHost());
-            sb.append("getLastPathSegment = " + uri.getLastPathSegment());
-            sb.append("getPath = " + uri.getPath());
-            sb.append("getQuery = " + uri.getQuery());
-            sb.append("getScheme = " + uri.getScheme());
-            sb.append("getSchemeSpecificPart = " + uri.getSchemeSpecificPart());
-            sb.append("getUserInfo = " + uri.getUserInfo());
-            sb.append("getPort = " + uri.getPort());
-
+//            sb.append("getAuthority = " + uri.getAuthority());
+//            sb.append("\ngetEncodedAuthority = " + uri.getEncodedAuthority());
+//            sb.append("\ngetEncodedFragment = " + uri.getEncodedFragment());
+            sb.append("\ngetEncodedPath = " + uri.getEncodedPath());
+//            sb.append("\ngetEncodedQuery = " + uri.getEncodedQuery());
+            sb.append("\ngetEncodedSchemeSpecificPart = " + uri.getEncodedSchemeSpecificPart());
+//            sb.append("\ngetEncodedUserInfo = " + uri.getEncodedUserInfo());
+//            sb.append("\ngetFragment = " + uri.getFragment());
+//            sb.append("\ngetHost = " + uri.getHost());
+            sb.append("\ngetLastPathSegment = " + uri.getLastPathSegment());//文件路径的最后一个
+            sb.append("\ngetPath = " + uri.getPath());
+//            sb.append("\ngetQuery = " + uri.getQuery());
+//            sb.append("\ngetScheme = " + uri.getScheme());
+            sb.append("\ngetSchemeSpecificPart = " + uri.getSchemeSpecificPart());
+//            sb.append("\ngetUserInfo = " + uri.getUserInfo());
+            sb.append("\ngetPort = " + uri.getPort());
+            sb.append("\ngetPathSegments:");
+            for (String s : uri.getPathSegments()) {
+                sb.append("\n\t" + s);
+            }
+            sb.append("\ngetQueryParameterNames:");
+            for (String s : uri.getQueryParameterNames()) {
+                sb.append("\n\t" + s);
+            }
             mMediaNameView.setText(sb.toString());
         }
     }
